@@ -1,0 +1,22 @@
+name: Weekly Snippets
+
+permissions:
+  contents: read
+  issues: write
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: "0 0 * * 4" # Every Thursday at 12:00 AM
+
+jobs:
+  weekly-snippets:
+    name: Create Weekly Snippet Issue
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filename: .github/weekly-snippets-template.md
