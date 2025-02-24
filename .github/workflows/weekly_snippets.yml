@@ -18,11 +18,13 @@ jobs:
       
       - name: Close previous week's issue
         run: |
-          issue_number=$(gh issue list --label "weekly-snippet" --limit 1 --sort created --json number --jq '.[0].number')
+          issue_number=$(gh issue list --label "weekly-snippet" --limit 1 --json number --jq 'sort_by(.created_at) | reverse | .[0].number')
           if [ -n "$issue_number" ]; then
             gh issue close $issue_number
           fi
-      
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create this week's issue
         uses: JasonEtco/create-an-issue@v2
         env:
