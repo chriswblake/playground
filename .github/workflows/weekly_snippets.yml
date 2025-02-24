@@ -15,7 +15,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: JasonEtco/create-an-issue@v2
+      
+      - name: Close previous week's issue
+        run: |
+          issue_number=$(gh issue list --label "weekly-snippet" --limit 1 --sort created --json number --jq '.[0].number')
+          if [ -n "$issue_number" ]; then
+            gh issue close $issue_number
+          fi
+      
+      - name: Create this week's issue
+        uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
