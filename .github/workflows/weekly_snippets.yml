@@ -9,10 +9,6 @@ on:
   # schedule:
   #   - cron: "0 0 * * 4" # Every Thursday at 12:00 AM
 
-permissions:
-  contents: read
-  issues: write
-
 jobs:
   weekly-snippets:
     name: Create Weekly Snippet Issue
