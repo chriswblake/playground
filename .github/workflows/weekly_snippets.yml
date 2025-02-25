@@ -18,7 +18,8 @@ jobs:
       
       - name: Close previous week's issue
         run: |
-          issue_number=$(gh issue list --label "weekly-snippet" --limit 1 --json number --jq 'sort_by(.created_at) | reverse | .[0].number')
+          issue_number=$(gh issue list --label "snippets" --limit 1 --json number --jq 'sort_by(.created_at) | reverse | .[0].number')
+          echo "IssueNumber: $issue_number"
           if [ -n "$issue_number" ]; then
             gh issue close $issue_number
           fi
