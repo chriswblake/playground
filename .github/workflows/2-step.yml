@@ -21,4 +21,4 @@ jobs:
     steps:
       - name: Say hello
         run: |
-          echo ${toJson(github)}
+          echo "${{ toJson(github) }}"
