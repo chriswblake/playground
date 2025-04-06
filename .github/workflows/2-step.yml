@@ -21,5 +21,4 @@ jobs:
     steps:
       - name: Say hello
         run: |
-          sleep 10
-          echo "hello world"
+          echo ${toJson(github)}
