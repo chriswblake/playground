@@ -11,8 +11,13 @@ jobs:
 
     steps:
       - name: Checkout
-        id: checkout
         uses: actions/checkout@v4
+
+      - name: Get response templates
+        uses: actions/checkout@v4
+        with:
+          repository: skills/response-templates
+          path: skills-response-templates
 
       - name: Deliberate pass
         id: deliberate-pass
@@ -65,7 +70,7 @@ jobs:
               ]
             }
 
-      - name: Check if all previous steps were successful
+      - name: Show on console
         run: |
           echo $UPDATED_TEXT
         env:
