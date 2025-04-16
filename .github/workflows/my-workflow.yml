@@ -25,4 +25,4 @@ jobs:
         run: |
           echo $STEPS
         env:
-          STEPS: ${{ steps.*.outcome }}
+          STEPS: ${{ steps.checkout.outcome }}
