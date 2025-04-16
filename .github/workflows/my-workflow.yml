@@ -24,7 +24,8 @@ jobs:
           exit 1
 
       - name: Check if all previous steps were successful
+
         run: |
           exit $OVERALL
         env:
-          OVERALL: ${{ steps.*.outcome }}
+          OVERALL: ${{ toJson(steps.*.outcome) }}
