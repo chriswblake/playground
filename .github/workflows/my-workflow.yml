@@ -1,0 +1,26 @@
+name: my workflow
+
+on:
+  workflow_dispatch:
+jobs:
+
+  my_job:
+    name: Check if secret scanning is enabled
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get response templates
+        uses: actions/checkout@v4
+        with:
+          repository: skills/response-templates
+          path: skills-response-templates
+
+      - name: Show steps outcomes
+        if: true
+        run: |
+          echo $STEPS
+        env:
+          STEPS: ${{ steps.*.outcome }}
