@@ -2,9 +2,11 @@ name: my workflow
 
 on:
   workflow_dispatch:
+  push:
+
 jobs:
   my_job:
-    name: Check if secret scanning is enabled
+    name: MY Job
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +26,6 @@ jobs:
           exit 1
 
       - name: Check if all previous steps were successful
-
         run: |
           exit $OVERALL
         env:
