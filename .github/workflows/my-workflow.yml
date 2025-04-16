@@ -10,10 +10,12 @@ jobs:
 
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v4
 
       - name: Get response templates
         uses: actions/checkout@v4
+        id: response-templates
         with:
           repository: skills/response-templates
           path: skills-response-templates
