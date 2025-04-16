@@ -28,7 +28,7 @@ jobs:
           echo "This is a deliberate fail"
           exit 1
 
-      - name: Check if all previous steps were successful
+      - name: Show all step results
         run: |
           echo $OVERALL
         env:
@@ -43,11 +43,11 @@ jobs:
           template-vars: >
             {
               "step_number": 1,
-              "passed": "",
+              "passed": ${{ steps.*.outcome == 'success' }},
               "results_table": [
                 {
                   "name": "Overall",
-                  "passed": true,
+                  "passed": ${{ steps.*.outcome == 'success' }},
                   "message": "${{ steps.*.outcome == 'success' }}"
                 },
                 {
@@ -66,3 +66,9 @@ jobs:
                 "???"
               ]
             }
+
+      - name: Check if all previous steps were successful
+        run: |
+          echo $UPDATED_TEXT
+        env:
+          UPDATED_TEXT: ${{ steps.build-message-step-results.outputs.updated-text }}
