@@ -35,7 +35,7 @@ jobs:
           OVERALL: ${{ toJson(steps.*.outcome) }}
 
       - name: Build message - step results
-        if: true
+        if: false
         id: build-message-step-results
         uses: skills/action-text-variables@v1
         with:
@@ -48,7 +48,8 @@ jobs:
                 {
                   "name": "Overall",
                   "passed": true,
-                  "message": "${{ toJson(steps.*.outcome) }}"
+                  "message": "${{ toJson(steps.*.outcome) == 'success' }}"
+                  "message2": "${{ toJson(steps.*.outcome) }}"
                 },
                 {
                   "name": "Secret Protection Enabled",
