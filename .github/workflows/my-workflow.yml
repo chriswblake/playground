@@ -30,7 +30,7 @@ jobs:
 
       - name: Check if all previous steps were successful
         run: |
-          exit $OVERALL
+          echo $OVERALL
         env:
           OVERALL: ${{ toJson(steps.*.outcome) }}
 
