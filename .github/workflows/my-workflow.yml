@@ -14,18 +14,17 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Get response templates
-        id: get-response-templates
-        uses: actions/checkout@v4
-        with:
-          repository: skills/response-templates
-          path: skills-response-templates
+      - name: Deliberate pass
+        id: deliberate-pass
+        run: |
+          echo "This is a deliberate pass"
 
       - name: Deliberate fail
         id: deliberate-fail
         continue-on-error: true
         run: |
           echo "This is a deliberate fail"
+          exit 1
 
       - name: Show all step results
         run: |
@@ -50,9 +49,9 @@ jobs:
                   "message": "${{ steps.*.outcome == 'success' }}"
                 },
                 {
-                  "name": "Checkout",
-                  "passed": ${{ steps.checkout.outcome == 'success' }},
-                  "message": "${{ steps.checkout.outcome == 'success' }}"
+                  "name": "Deliberate pass",
+                  "passed": ${{ steps.deliberate-pass.outcome == 'success' }},
+                  "message": "${{ steps.deliberate-pass.outcome == 'success' }}"
                 },
                 {
                   "name": "Deliberate fail",
