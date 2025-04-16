@@ -48,8 +48,7 @@ jobs:
                 {
                   "name": "Overall",
                   "passed": true,
-                  "message": "${{ toJson(steps.*.outcome) == 'success' }}"
-                  "message2": "${{ toJson(steps.*.outcome) }}"
+                  "message": "${{ steps.*.outcome == 'success' }}"
                 },
                 {
                   "name": "Checkout",
