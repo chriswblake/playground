@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Get response templates
+        id: get-response-templates
         uses: actions/checkout@v4
         with:
           repository: skills/response-templates
@@ -29,6 +30,39 @@ jobs:
 
       - name: Check if all previous steps were successful
         run: |
-          echo $OVERALL
+          exit $OVERALL
         env:
           OVERALL: ${{ toJson(steps.*.outcome) }}
+
+      - name: Build message - step results
+        if: true
+        id: build-message-step-results
+        uses: skills/action-text-variables@v1
+        with:
+          template-file: skills-response-templates/step-feedback/step-results.md
+          template-vars: >
+            {
+              "step_number": 1,
+              "passed": "",
+              "results_table": [
+                {
+                  "name": "Overall",
+                  "passed": true,
+                  "message": "${{ toJson(steps.*.outcome) }}"
+                },
+                {
+                  "name": "Secret Protection Enabled",
+                  "passed": ${{ steps.checkout.outcome == 'success' }},
+                  "message": "${{ steps.checkout.outcome == 'success' }}"
+                },
+                {
+                  "name": "Push Protection Disabled",
+                  "passed": ${{ steps.deliberate-fail.outcome == 'success' }},
+                  "message": "${{ steps.deliberate-fail.outcome == 'success' }}"
+                }
+              ],
+              "tips": [
+                "???",
+                "???"
+              ]
+            }
