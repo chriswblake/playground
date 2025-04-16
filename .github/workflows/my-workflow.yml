@@ -3,26 +3,28 @@ name: my workflow
 on:
   workflow_dispatch:
 jobs:
-
   my_job:
     name: Check if secret scanning is enabled
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        id: checkout
         uses: actions/checkout@v4
 
       - name: Get response templates
         uses: actions/checkout@v4
-        id: response-templates
         with:
           repository: skills/response-templates
           path: skills-response-templates
 
-      - name: Show steps outcomes
-        if: true
+      - name: Deliberate fail
+        continue-on-error: true
         run: |
-          echo $STEPS
+          echo "This is a deliberate fail"
+          exit 1
+
+      - name: Check if all previous steps were successful
+        run: |
+          exit $OVERALL
         env:
-          STEPS: ${{ steps.checkout.outcome }}
+          OVERALL: ${{ steps.*.outcome }}
