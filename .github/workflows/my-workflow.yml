@@ -6,11 +6,12 @@ on:
 
 jobs:
   my_job:
-    name: MY Job
+    name: My Job
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
+        id: checkout
         uses: actions/checkout@v4
 
       - name: Get response templates
@@ -20,6 +21,7 @@ jobs:
           path: skills-response-templates
 
       - name: Deliberate fail
+        id: deliberate-fail
         continue-on-error: true
         run: |
           echo "This is a deliberate fail"
