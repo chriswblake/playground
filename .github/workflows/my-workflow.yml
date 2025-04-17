@@ -25,16 +25,17 @@ jobs:
         run: |
           echo "This is a deliberate pass"
 
-      - name: Maybe fail (pass)
+      - name: Maybe fail (fail)
         id: maybe-fail
         continue-on-error: true
         run: |
           echo "This is a deliberate fail"
+          exit 1
 
       - name: Show all step results
         run: |
           echo "Outcomes: $OUTCOMES"
-          echo: "Overall: $OVERALL"
+          echo "Overall: $OVERALL"
         env:
           OUTCOMES: ${{ toJson(steps.*.outcome) }}
           OVERALL: ${{ steps.*.outcome == 'success' }}
