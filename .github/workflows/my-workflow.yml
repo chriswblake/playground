@@ -35,12 +35,12 @@ jobs:
       - name: Show all step results
         run: |
           echo "Outcomes: $OUTCOMES"
-          echo "Contains false: $CONTAINS_FALSE"
-          echo "Contains no false: $CONTAINS_NO_FALSE"
+          echo "Contains failure: $CONTAINS_FAILURE"
+          echo "Contains no failue: $CONTAINS_NO_FAILURE"
         env:
           OUTCOMES: ${{ toJson(steps.*.outcome) }}
-          CONTAINS_FALSE: ${{ contains(steps.*.outcome, 'failure') }}
-          CONTAINS_NO_FALSE: ${{ !contains(steps.*.outcome, 'failure') }}
+          CONTAINS_FAILURE: ${{ contains(steps.*.outcome, 'failure') }}
+          CONTAINS_NO_FAILURE: ${{ !contains(steps.*.outcome, 'failure') }}
 
       - name: Build message - step results
         if: false
