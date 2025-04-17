@@ -40,7 +40,7 @@ jobs:
           OVERALL: ${{ !contains(steps.*.outcome, 'failure') }}
 
       - name: Build message - step results
-        if: false
+        if: true
         id: build-message-step-results
         uses: skills/action-text-variables@v1
         with:
@@ -68,7 +68,7 @@ jobs:
             }
 
       - name: Show on console
-        if: false
+        if: true
         run: |
           echo $UPDATED_TEXT
         env:
