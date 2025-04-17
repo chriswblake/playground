@@ -15,9 +15,8 @@ jobs:
         continue-on-error: true
         run: |
           echo "This is a deliberate fail"
-          exit 1
 
-      - name: Show all step results
+      - name: Show message
         run: |
           echo "Outcomes: $OUTCOMES"
           echo "Message: $MESSAGE"
