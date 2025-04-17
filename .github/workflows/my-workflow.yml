@@ -34,12 +34,15 @@ jobs:
       - name: Show all step results
         run: |
           echo "Outcomes: $OUTCOMES"
-          echo "Overall: $OVERALL"
+          echo "Contains false: $CONTAINS_FALSE"
+          echo "Contains no false: $CONTAINS_NO_FALSE"
         env:
           OUTCOMES: ${{ toJson(steps.*.outcome) }}
-          OVERALL: ${{ steps.*.outcome == 'success' }}
+          CONTAINS_FALSE: ${{ contains(steps.*.outcome, 'false') }}
+          CONTAINS_NO_FALSE: ${{ !contains(steps.*.outcome, 'false') }}
 
       - name: Build message - step results
+        if: false
         id: build-message-step-results
         uses: skills/action-text-variables@v1
         with:
@@ -72,6 +75,7 @@ jobs:
             }
 
       - name: Show on console
+        if: false
         run: |
           echo $UPDATED_TEXT
         env:
