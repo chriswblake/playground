@@ -1,11 +1,11 @@
-name: check-all-steps
+name: dynamic-message
 
 on:
   workflow_dispatch:
   push:
 
 jobs:
-  check-all-steps:
+  dynamic-message:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,4 +23,4 @@ jobs:
           echo "Message: $MESSAGE"
         env:
           OUTCOMES: ${{ toJson(steps.maybe-fail.outcome) }}
-          MESSAGE: ${{ steps.maybe-fail.outcome == 'failure' && 'success' || 'failure' }}
+          MESSAGE: ${{ steps.maybe-fail.outcome == 'success' && 'success' || 'failure' }}
