@@ -25,22 +25,22 @@ jobs:
         run: |
           echo "This is a deliberate pass"
 
-      - name: Maybe fail (pass)
+      - name: Maybe fail (fail)
         id: maybe-fail
         continue-on-error: true
         run: |
           echo "This is a deliberate fail"
+          exit 1
 
       - name: Show all step results
         run: |
-          echo "Outcomes: $OVERALL"
+          echo "Outcomes: $OUTCOMES"
           echo: "Overall: $OVERALL"
         env:
-          OVERALL: ${{ toJson(steps.*.outcome) }}
+          OUTCOMES: ${{ toJson(steps.*.outcome) }}
           OVERALL: ${{ steps.*.outcome == 'success' }}
 
       - name: Build message - step results
-        if: true
         id: build-message-step-results
         uses: skills/action-text-variables@v1
         with:
