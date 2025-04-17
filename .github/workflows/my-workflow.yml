@@ -25,12 +25,11 @@ jobs:
         run: |
           echo "This is a deliberate pass"
 
-      - name: Maybe fail (fail)
+      - name: Maybe fail (pass)
         id: maybe-fail
         continue-on-error: true
         run: |
           echo "This is a deliberate fail"
-          exit 1
 
       - name: Show all step results
         run: |
