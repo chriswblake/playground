@@ -1,40 +1,26 @@
-name: my workflow
+name: check-all-steps
 
 on:
   workflow_dispatch:
   push:
 
 jobs:
-  get_templates:
-    name: My Job
+  check-all-steps:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
 
-      - name: Get response templates 1
-        uses: actions/checkout@v4
-        with:
-          repository: skills/response-templates
-          path: skills-response-templates
-
-      - name: Show templates
+      - name: Maybe fail
+        id: maybe-fail
+        continue-on-error: true
         run: |
-          echo "Templates:"
-          ls -R skills-response-templates
+          echo "This is a deliberate fail"
+          exit 1
 
-      - name: Get exercise toolkit templates
-        uses: actions/checkout@v4
-        with:
-          repository: skills/exercise-toolkit
-          ref: v0.3.0
-          sparse-checkout: |
-            markdown-templates
-          path: exercise-toolkit
-
-      - name: Show templates
+      - name: Show all step results
         run: |
-          echo "Templates:"
-          ls -R exercise-toolkit/markdown-templates
-
+          echo "Outcomes: $OUTCOMES"
+          echo "Message: $MESSAGE"
+        env:
+          OUTCOMES: ${{ toJson(steps.maybe-fail.outcome) }}
+          MESSAGE: ${{ steps.maybe-fail.outcome == 'failure' && "success" || "failure" }}
