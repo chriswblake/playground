@@ -19,22 +19,22 @@ jobs:
           repository: skills/response-templates
           path: skills-response-templates1
 
-      - name: Get response templates 2
+      - name: Show templates
+        run: |
+          echo "Templates:"
+          ls -R skills-response-templates
+
+      - name: Get exercise toolkit templates
         uses: actions/checkout@v4
         with:
           repository: skills/exercise-toolkit
           ref: v0.3.0
           sparse-checkout: |
             markdown-templates
-          path: skills-response-templates2
-
-      - name: Show templates 1
-        run: |
-          echo "Templates 1:"
-          ls -R skills-response-templates1
+          path: exercise-toolkit
 
       - name: Show templates 2
         run: |
           echo "Templates 2:"
-          ls -R skills-response-templates2
+          ls -R exercise-toolkit/markdown-templates
 
