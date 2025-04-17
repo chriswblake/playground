@@ -31,17 +31,21 @@ jobs:
         run: |
           echo "This is a deliberate fail"
           exit 1
+        env:
+          success_message: "This is a deliberate fail"
 
       - name: Show all step results
         run: |
+          echo "Steps objects: $STEPS"
           echo "Outcomes: $OUTCOMES"
           echo "OVERALL: $OVERALL"
         env:
+          STEPS: ${{ toJson(steps) }}
           OUTCOMES: ${{ toJson(steps.*.outcome) }}
           OVERALL: ${{ !contains(steps.*.outcome, 'failure') }}
 
       - name: Build message - step results
-        if: true
+        if: false
         id: build-message-step-results
         uses: skills/action-text-variables@v1
         with:
@@ -69,7 +73,7 @@ jobs:
             }
 
       - name: Show on console
-        if: true
+        if: false
         run: |
           echo $UPDATED_TEXT
         env:
