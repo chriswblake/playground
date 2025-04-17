@@ -39,8 +39,8 @@ jobs:
           echo "Contains no false: $CONTAINS_NO_FALSE"
         env:
           OUTCOMES: ${{ toJson(steps.*.outcome) }}
-          CONTAINS_FALSE: ${{ contains(steps.*.outcome, 'false') }}
-          CONTAINS_NO_FALSE: ${{ !contains(steps.*.outcome, 'false') }}
+          CONTAINS_FALSE: ${{ contains(steps.*.outcome, 'failure') }}
+          CONTAINS_NO_FALSE: ${{ !contains(steps.*.outcome, 'failure') }}
 
       - name: Build message - step results
         if: false
