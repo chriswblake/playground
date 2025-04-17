@@ -21,11 +21,12 @@ jobs:
 
       - name: Deliberate pass
         id: deliberate-pass
+        continue-on-error: true
         run: |
           echo "This is a deliberate pass"
 
-      - name: Deliberate fail
-        id: deliberate-fail
+      - name: Maybe fail
+        id: maybe-fail
         continue-on-error: true
         run: |
           echo "This is a deliberate fail"
@@ -60,8 +61,8 @@ jobs:
                 },
                 {
                   "name": "Deliberate fail",
-                  "passed": ${{ steps.deliberate-fail.outcome == 'success' }},
-                  "message": "${{ steps.deliberate-fail.outcome == 'success' }}"
+                  "passed": ${{ steps.maybe-fail.outcome == 'success' }},
+                  "message": "${{ steps.maybe-fail.outcome == 'success' }}"
                 }
               ],
               "tips": [
