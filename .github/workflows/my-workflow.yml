@@ -5,7 +5,7 @@ on:
   push:
 
 jobs:
-  my_job:
+  get_templates:
     name: My Job
     runs-on: ubuntu-latest
 
@@ -13,68 +13,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Get response templates
+      - name: Get response templates 1
         uses: actions/checkout@v4
         with:
           repository: skills/response-templates
-          path: skills-response-templates
+          path: skills-response-templates1
 
-      - name: Deliberate pass
-        id: deliberate-pass
-        continue-on-error: true
-        run: |
-          echo "This is a deliberate pass"
-
-      - name: Maybe fail (fail)
-        id: maybe-fail
-        continue-on-error: true
-        run: |
-          echo "This is a deliberate fail"
-          exit 1
-        env:
-          success_message: "This is a deliberate fail"
-
-      - name: Show all step results
-        run: |
-          echo "Steps objects: $STEPS"
-          echo "Outcomes: $OUTCOMES"
-          echo "OVERALL: $OVERALL"
-        env:
-          STEPS: ${{ toJson(steps) }}
-          OUTCOMES: ${{ toJson(steps.*.outcome) }}
-          OVERALL: ${{ !contains(steps.*.outcome, 'failure') }}
-
-      - name: Build message - step results
-        if: false
-        id: build-message-step-results
-        uses: skills/action-text-variables@v1
+      - name: Get response templates 2
+        uses: actions/checkout@v4
         with:
-          template-file: skills-response-templates/step-feedback/step-results.md
-          template-vars: >
-            {
-              "step_number": 1,
-              "passed": ${{ !contains(steps.*.outcome, 'failure') }},
-              "results_table": [
-                {
-                  "name": "Deliberate pass",
-                  "passed": ${{ steps.deliberate-pass.outcome == 'success' }},
-                  "message": "${{ steps.deliberate-pass.outcome == 'success' }}"
-                },
-                {
-                  "name": "Deliberate fail",
-                  "passed": ${{ steps.maybe-fail.outcome == 'success' }},
-                  "message": "${{ steps.maybe-fail.outcome == 'success' }}"
-                }
-              ],
-              "tips": [
-                "???",
-                "???"
-              ]
-            }
+          repository: skills/exercise-toolkit
+          ref: v0.3.0
+          sparse-checkout: |
+            markdown-templates
+          path: skills-response-templates2
 
-      - name: Show on console
-        if: false
+      - name: Show templates 1
         run: |
-          echo $UPDATED_TEXT
-        env:
-          UPDATED_TEXT: ${{ steps.build-message-step-results.outputs.updated-text }}
+          echo "Templates 1:"
+          ls -R skills-response-templates1
+
+      - name: Show templates 2
+        run: |
+          echo "Templates 2:"
+          ls -R skills-response-templates2
+
